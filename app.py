@@ -400,7 +400,7 @@ else:
                     st.success("💥 System reset complete! Enrolled Student Base has been set back to 0.")
                     st.rerun()
 
-     with tab_directory:
+with tab_directory:
     # # 1. Keep your original payment transaction ledger layout at the top
     try:
         conn = get_db_connection()
