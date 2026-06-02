@@ -24,7 +24,7 @@ try:
     watermark_css = f"""
     <style>
     .stApp {{
-        background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), 
+        background-image: linear-gradient(rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.90)), 
                           url("data:image/jpg;base64,{img_base64}");
         background-size: 650px;
         background-repeat: no-repeat;
