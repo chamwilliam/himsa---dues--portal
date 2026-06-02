@@ -420,9 +420,6 @@ with tab_directory:
         "Select Level to Display", 
         ["Level 100", "Level 200", "Level 300", "Level 400"],
         key="directory_level_filter"
-    )
-        key="directory_level_filter"
-    )
 
     # Clean format string to support different database storage patterns
     clean_level_val = selected_level.replace("Level ", "")
