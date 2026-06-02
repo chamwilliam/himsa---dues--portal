@@ -400,19 +400,18 @@ else:
                     st.success("💥 System reset complete! Enrolled Student Base has been set back to 0.")
                     st.rerun()
 
-        with tab_directory:
-        with tab_directory:
-    # 1. Keep your original payment transaction ledger layout at the top
+     with tab_directory:
+    # # 1. Keep your original payment transaction ledger layout at the top
     try:
         conn = get_db_connection()
-        p_df = pd.read_sql_query("SELECT * FROM payments", conn) # Pulls global logs
+        p_df = pd.read_sql_query("SELECT * FROM payments", conn)
         conn.close()
         st.subheader("💸 Global Payment Logs")
         st.dataframe(p_df, use_container_width=True)
     except Exception as e:
         st.error(f"Could not load payment logs: {e}")
 
-    # 2. Add a visual separation divider
+    # # 2. Add a visual separation divider
     st.write("---")
     st.subheader("📋 Filter Registered Members by Level")
 
@@ -420,6 +419,8 @@ else:
     selected_level = st.selectbox(
         "Select Level to Display", 
         ["Level 100", "Level 200", "Level 300", "Level 400"],
+        key="directory_level_filter"
+    )
         key="directory_level_filter"
     )
 
