@@ -9,7 +9,33 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
+import base64
 
+# Function to load the image and turn it into a web-readable format
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+# Try loading your uploaded logo file
+try:
+    img_base64 = get_base64_image("1001113511.jpg")
+    
+    # Injecting custom styling to place the logo behind everything safely
+    watermark_css = f"""
+    <style>
+    .stApp {{
+        background-image: linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)), 
+                          url("data:image/jpg;base64,{img_base64}");
+        background-size: 450px;
+        background-repeat: no-repeat;
+        background-position: center 60%;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+    st.markdown(watermark_css, unsafe_allow_html=True)
+except FileNotFoundError:
+    pass  # Keeps the app running normally if the image is missing
 # Create local system folder to physically back up PDF receipt records
 RECEIPTS_DIR = "HIMSA_Receipts"
 if not os.path.exists(RECEIPTS_DIR):
