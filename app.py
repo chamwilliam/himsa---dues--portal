@@ -18,7 +18,7 @@ def get_base64_image(image_path):
 
 # Try loading your uploaded logo file
 try:
-    img_base64 = get_base64_image("1001113511.jpg")
+    img_base64 = get_base64_image("IMG-20260514-WA0105.jpg")
     
     # Injecting custom styling to place the logo behind everything safely
     watermark_css = f"""
