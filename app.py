@@ -417,7 +417,7 @@ with tab_directory:
 
     # Dropdown selector box for class level
     selected_level = st.selectbox(
-        "Select Level to Display", 
+        "Select Level to Display"), 
         ["Level 100", "Level 200", "Level 300", "Level 400"],
         key="directory_level_filter"
 
