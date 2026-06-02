@@ -24,11 +24,11 @@ try:
     watermark_css = f"""
     <style>
     .stApp {{
-        background-image: linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)), 
+        background-image: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), 
                           url("data:image/jpg;base64,{img_base64}");
-        background-size: 450px;
+        background-size: 700px;
         background-repeat: no-repeat;
-        background-position: center 60%;
+        background-position: center 55%;
         background-attachment: fixed;
     }}
     </style>
