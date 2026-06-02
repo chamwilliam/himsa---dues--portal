@@ -401,10 +401,51 @@ else:
                     st.rerun()
 
         with tab_directory:
-            conn = get_db_connection()
-            p_df = pd.read_sql_query("SELECT transaction_id AS [TX Ref], index_number AS [Index ID], amount_paid AS [Amount (GH₵)], academic_year AS [Year] FROM payments", conn)
-            conn.close()
-            st.dataframe(p_df, use_container_width=True)
+        with tab_directory:
+    # 1. Keep your original payment transaction ledger layout at the top
+    try:
+        conn = get_db_connection()
+        p_df = pd.read_sql_query("SELECT * FROM payments", conn) # Pulls global logs
+        conn.close()
+        st.subheader("💸 Global Payment Logs")
+        st.dataframe(p_df, use_container_width=True)
+    except Exception as e:
+        st.error(f"Could not load payment logs: {e}")
+
+    # 2. Add a visual separation divider
+    st.write("---")
+    st.subheader("📋 Filter Registered Members by Level")
+
+    # Dropdown selector box for class level
+    selected_level = st.selectbox(
+        "Select Level to Display", 
+        ["Level 100", "Level 200", "Level 300", "Level 400"],
+        key="directory_level_filter"
+    )
+
+    # Clean format string to support different database storage patterns
+    clean_level_val = selected_level.replace("Level ", "")
+
+    query = """
+        SELECT name AS 'Full Legal Name', index_number AS 'Index Number', level AS 'Level' 
+        FROM users 
+        WHERE (level = ? OR level = ?) AND role = 'student'
+    """
+    
+    try:
+        conn = get_db_connection()
+        filtered_data = pd.read_sql_query(query, conn, params=(selected_level, clean_level_val))
+        conn.close()
+        
+        if not filtered_data.empty:
+            st.dataframe(filtered_data, use_container_width=True)
+            st.info(f"Total Count: {len(filtered_data)} students registered in this class.")
+        else:
+            st.warning(f"No student records found matching {selected_level} in the system.")
+            
+    except Exception as e:
+        st.error(f"Could not filter level records: {e}")    
+
 
     # --- STUDENT DASHBOARD TERMINAL VIEW ---
     else:
