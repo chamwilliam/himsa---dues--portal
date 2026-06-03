@@ -428,7 +428,6 @@ else:
         year_pattern = level_to_year.get(selected_level, "%/24/%")
 
         # Smart bypass: Select users based on their Index Number string structure instead of a missing column
-        query = "SELECT name AS 'Full Legal Name', index_number AS 'Index Number' FROM users WHERE index_number LIKE ?"
         
         try:
             conn = get_db_connection()
