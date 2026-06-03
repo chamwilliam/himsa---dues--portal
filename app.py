@@ -439,10 +439,10 @@ else:
                 st.info(f"Total Count: {len(filtered_data)} students registered for this class tier.")
             else:
                 st.warning(f"No student records found matching the {selected_level} criteria in the system.")
-       except Exception as e:
+        except Exception as e:
            st.error(f"Could not filter records: {e}")
     # --- STUDENT DASHBOARD TERMINAL VIEW ---
-else: 
+        else: 
         st.subheader(f"📋 Student Dashboard — Session: {active_session_year}")
         base_rate = dues_rules.get(computed_level, 0.00)
         
