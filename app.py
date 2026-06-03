@@ -442,7 +442,7 @@ else:
         except Exception as e:
             st.error(f"Could not filter records: {e}")
     # --- STUDENT DASHBOARD TERMINAL VIEW ---
-    else:
+            else: 
         st.subheader(f"📋 Student Dashboard — Session: {active_session_year}")
         base_rate = dues_rules.get(computed_level, 0.00)
         
