@@ -419,8 +419,8 @@ else:
 
         clean_level_val = selected_level.replace("Level ", "")
 
-        # Target the database to display student names matching the selection
-        query = "SELECT name AS 'Full Legal Name', index_number AS 'Index Number', level AS 'Level' FROM users WHERE (level = ? OR level = ?) AND role = 'student'"
+        # Fixed query running smoothly without referencing the non-existent role column
+        query = "SELECT name AS 'Full Legal Name', index_number AS 'Index Number', level AS 'Level' FROM users WHERE level = ? OR level = ?"
         
         try:
             conn = get_db_connection()
@@ -433,6 +433,7 @@ else:
             else:
                 st.warning(f"No student records found matching {selected_level} in the system.")
         except Exception as e:
+            st.error(f"Could not filter level records: {e}")
             st.error(f"Could not filter level records: {e}")
     key="directory_level_filter"
 
