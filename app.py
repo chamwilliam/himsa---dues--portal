@@ -417,8 +417,7 @@ else:
         # The clean selector box on a single line completely avoids the multi-line typo trap
         selected_level = st.selectbox("Select Level to Display", ["Level 100", "Level 200", "Level 300", "Level 400"], key="directory_level_filter")
 
-        # Convert selectbox text (e.g., "Level 100") into your standard year format suffix (e.g., "26")
-        # Adjust these suffix mappings to perfectly match how your index numbers are structured
+        # Convert selectbox text into your standard year format suffix patterns
         level_to_year = {
             "Level 100": "%/26/%",
             "Level 200": "%/25/%",
@@ -428,6 +427,7 @@ else:
         year_pattern = level_to_year.get(selected_level, "%/24/%")
 
         # Smart bypass: Select users based on their Index Number string structure instead of a missing column
+        query = "SELECT name AS 'Full Legal Name', index_number AS 'Index Number' FROM users WHERE index_number LIKE ?"
         
         try:
             conn = get_db_connection()
@@ -441,34 +441,6 @@ else:
                 st.warning(f"No student records found matching the {selected_level} criteria in the system.")
         except Exception as e:
             st.error(f"Could not filter records: {e}")
-            st.error(f"Could not filter level records: {e}")
-            st.error(f"Could not filter level records: {e}")
-    key="directory_level_filter"
-
-    # Clean format string to support different database storage patterns
-    clean_level_val = selected_level.replace("Level ", "")
-
-    query = """
-        SELECT name AS 'Full Legal Name', index_number AS 'Index Number', level AS 'Level' 
-        FROM users 
-        WHERE (level = ? OR level = ?) AND role = 'student'
-    """
-    
-    try:
-        conn = get_db_connection()
-        filtered_data = pd.read_sql_query(query, conn, params=(selected_level, clean_level_val))
-        conn.close()
-        
-        if not filtered_data.empty:
-            st.dataframe(filtered_data, use_container_width=True)
-            st.info(f"Total Count: {len(filtered_data)} students registered in this class.")
-        else:
-            st.warning(f"No student records found matching {selected_level} in the system.")
-            
-    except Exception as e:
-        st.error(f"Could not filter level records: {e}")    
-
-
     # --- STUDENT DASHBOARD TERMINAL VIEW ---
     else:
         st.subheader(f"📋 Student Dashboard — Session: {active_session_year}")
